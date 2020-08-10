@@ -6,6 +6,8 @@
 @Version :   1.0
 @Contact :   fanlingjie@laiye.com
 """
+
+
 def parse(filename):
     result = {
         "title": "",
@@ -21,20 +23,22 @@ def parse(filename):
     while i < len(content):
         s = content[i]
         link = s[s.find("(")+1:s.find(")")]
+        text = s[s.find("[") + 1:s.find("]")]
         i += 1
-        if link.endswith(".mp4"):
-            text = s[s.find("[")+1:s.find("]")]
+        if link.endswith(".mp4") or link.endswith(".gif"):
+
             result['content'].append({
                 'link': link,
                 'text': text,
                 'type': 'video'
             })
         else:
-            text = content[i].strip()
+            subtitle = content[i].strip()
             i += 1
             result['content'].append({
                 'link': link,
                 'text': text,
+                'subtitle': subtitle,
                 'type': 'image'
             })
     return result
