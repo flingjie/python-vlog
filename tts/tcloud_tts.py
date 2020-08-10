@@ -16,7 +16,7 @@ import os
 TCLOUD_APP_ID = int(os.environ["TCLOUD_APP_ID"])
 TCLOUD_SECRET_ID = os.environ["TCLOUD_SECRET_ID"]
 TCLOUD_SECRET_KEY = os.environ["TCLOUD_SECRET_KEY"]
-OUTPUT_PATH = "../output/audio"
+OUTPUT_PATH = "./data/audio"
 
 
 def generate_sign(request_data):
@@ -98,6 +98,7 @@ def text2wav(content):
     i = 1
     t = int(time.time() * 1000)
     output_file = os.path.join(OUTPUT_PATH, f"{t}.wav")
+    print(f"generate audio file: {output_file}")
     wavfile = wave.open(output_file, 'wb')
     wavfile.setparams((1, 2, 16000, 0, 'NONE', 'NONE'))
     for chunk in r.iter_content(1000):
