@@ -2,21 +2,20 @@
 import requests
 import wave
 import json
-import base64
 import time
-import collections
 import urllib
 import base64
 import hmac
 import hashlib
 import uuid
 import os
-
+from playsound import playsound
+from config import AUDIO_OUTPUT
 
 TCLOUD_APP_ID = int(os.environ["TCLOUD_APP_ID"])
 TCLOUD_SECRET_ID = os.environ["TCLOUD_SECRET_ID"]
 TCLOUD_SECRET_KEY = os.environ["TCLOUD_SECRET_KEY"]
-OUTPUT_PATH = "./data/audio"
+OUTPUT_PATH = AUDIO_OUTPUT
 
 
 def generate_sign(request_data):
@@ -113,5 +112,6 @@ def text2wav(content):
 
 
 if __name__ == "__main__":
-    print(text2wav("返回音频格式：Python SDK只支持pcm格式"))
+    filename = text2wav("matplotlib")
+    playsound(filename)
 

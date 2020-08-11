@@ -48,9 +48,8 @@ def generate_clip_with_subtitle(image_path, text):
     audio = AudioFileClip(text2wav(text))
     txt_clip = TextClip(text.replace(" ", ""), font=config.SUBTITLE['font'],
                         color=config.SUBTITLE['color'], fontsize=config.SUBTITLE['font-size'])
-    vtuber_clip = get_vtuber(audio.duration)
-    video = CompositeVideoClip([clip, txt_clip.set_pos(('center', 'bottom')),
-                                vtuber_clip.set_pos(('right', 'bottom'))])
+
+    video = CompositeVideoClip([clip, txt_clip.set_pos(('center', 'bottom'))])
     video.audio = audio
     video.duration = audio.duration
     return video
@@ -96,7 +95,6 @@ def generate_vlog(filename, output_path):
     result = parser.parse(filename)
     title = result['title']
     title_clip = generate_title(title)
-    clips.append(title_clip)
     for item in result['content']:
         if item['text']:
             clips.append(generate_text_clip(item['text']))
@@ -104,8 +102,14 @@ def generate_vlog(filename, output_path):
             clips.append(generate_clip_with_subtitle(item['link'], item['subtitle']))
         elif item['type'] == 'video':
             clips.append(load_video(item['link']))
+
     clips.append(generate_ending())
-    video = concatenate_videoclips(clips, method="compose")
+    result = concatenate_videoclips(clips, method="compose")
+    vtuber_clip = get_vtuber(result.duration)
+    content_clip = CompositeVideoClip([result, vtuber_clip.set_pos(('right', 'bottom'))])
+    ending_clip = generate_ending()
+    video = concatenate_videoclips([title_clip, content_clip, ending_clip],
+                                   method="compose")
     video.write_videofile(os.path.join(output_path, f"{title}.mp4"), fps=24, audio_codec="aac")
 
 

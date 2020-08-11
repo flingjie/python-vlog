@@ -15,7 +15,7 @@ TITLE = {
 
 SUBTITLE = {
     "font": "MianFeiShangYong",
-    "font-size": 60,
+    "font-size": 100,
     "color": "blue",
 }
 
@@ -36,3 +36,5 @@ VTUBER_IMAGES = [
     "data/vtuber/speak_1.png",
     "data/vtuber/speak_2.png",
 ]
+
+AUDIO_OUTPUT = "./data/audio"

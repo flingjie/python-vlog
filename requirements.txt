@@ -15,6 +15,7 @@ parso==0.7.1
 pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==7.2.0
+playsound==1.2.2
 proglog==0.1.9
 prompt-toolkit==3.0.5
 ptyprocess==0.6.0
