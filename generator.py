@@ -1,5 +1,6 @@
 from moviepy.editor import (
-    ImageClip, 
+    ImageClip,
+    ImageSequenceClip,
     AudioFileClip,
     VideoFileClip,
     TextClip,
@@ -35,13 +36,20 @@ def generate_title(title):
     return clip
 
 
+def get_vtuber(duration):
+    vtuber = ImageSequenceClip(config.VTUBER_IMAGES * int(duration), fps=3)
+    return vtuber
+
+
 def generate_clip_with_subtitle(image_path, text):
     print(f"clip text: {text}")
     clip = ImageClip(image_path)
     audio = AudioFileClip(text2wav(text))
     txt_clip = TextClip(text.replace(" ", ""), font=config.SUBTITLE['font'],
                         color=config.SUBTITLE['color'], fontsize=config.SUBTITLE['font-size'])
-    video = CompositeVideoClip([clip, txt_clip.set_pos(('center', 'bottom'))])
+    vtuber_clip = get_vtuber(audio.duration)
+    video = CompositeVideoClip([clip, txt_clip.set_pos(('center', 'bottom')),
+                                vtuber_clip.set_pos(('right', 'bottom'))])
     video.audio = audio
     video.duration = audio.duration
     return video

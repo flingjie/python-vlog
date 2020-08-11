@@ -30,3 +30,9 @@ ENDING = {
     "font-size": 150,
     "color": "red",
 }
+
+VTUBER_IMAGES = [
+    "data/vtuber/speak_0.png",
+    "data/vtuber/speak_1.png",
+    "data/vtuber/speak_2.png",
+]

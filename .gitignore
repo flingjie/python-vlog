@@ -293,7 +293,6 @@ one_crm/media/
 
 output/*.mp4
 data/*.*
-data/audio/*.*
-data/images/*.*
-data/video/*.*
+data/*/*.*
 .env
+abc.py
