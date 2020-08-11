@@ -18,22 +18,12 @@ import os
 def generate_title(title):
     print(f"title: {title}")
     
-    def cascade(screenpos, i):
-        v = np.array([0, -1])
-        d = lambda t: 1 if t < 0 else abs(np.sinc(t) / (1 + t ** 4))
-        return lambda t: screenpos + v * 400 * d(t - 0.15 * i)
-
-    def move_letters(letters, funcpos):
-        return [letter.set_pos(funcpos(letter.screenpos, i))
-                for i, letter in enumerate(letters)]
-
     size = (1280, 720)
     title_clip = TextClip(title, color=config.TITLE['color'],
                           font=config.TITLE['font'], kerning=5,
                           fontsize=config.TITLE['font-size'])
-    cvc = CompositeVideoClip([title_clip.set_pos('center')], size=size)
-    letters = findObjects(cvc)
-    clip = CompositeVideoClip(move_letters(letters, cascade), size=size).subclip(0, 5)
+    clip = CompositeVideoClip([title_clip.set_pos('center')], size=size)
+    clip.duration = 1
     return clip
 
 
