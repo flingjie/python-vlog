@@ -12,6 +12,7 @@ import parser
 from tts import text2wav
 import numpy as np
 import config
+import os
 
 
 def generate_title(title):
@@ -93,7 +94,8 @@ def generate_ending(text="听说点赞带来好运"):
 def generate_vlog(filename, output_path):
     clips = []
     result = parser.parse(filename)
-    title_clip = generate_title(result['title'])
+    title = result['title']
+    title_clip = generate_title(title)
     clips.append(title_clip)
     for item in result['content']:
         if item['text']:
@@ -104,6 +106,6 @@ def generate_vlog(filename, output_path):
             clips.append(load_video(item['link']))
     clips.append(generate_ending())
     video = concatenate_videoclips(clips, method="compose")
-    video.write_videofile(output_path, fps=24, audio_codec="aac")
+    video.write_videofile(os.path.join(output_path, f"{title}.mp4"), fps=24, audio_codec="aac")
 
 

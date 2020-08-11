@@ -10,6 +10,6 @@ from generator import generate_vlog
 
 
 if __name__ == "__main__":
-    filename = "data/scripts/myqr.md"
-    output_path = "output/test.mp4"
+    filename = "data/scripts/jieba.md"
+    output_path = "output"
     generate_vlog(filename, output_path)
