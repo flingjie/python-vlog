@@ -9,27 +9,27 @@
 
 TITLE = {
     "font": "MianFeiShangYong",
-    "font-size": 160,
+    "font-size": 120,
     "color": "#FF9900",
     "stroke-color": "black",
 }
 
 SUBTITLE = {
     "font": "PingFang",
-    "font-size": 100,
+    "font-size": 60,
     "color": "white",
     "stroke-color": "black",
 }
 
 TEXT_CLIP = {
     "font": "MianFeiShangYong",
-    "font-size": 150,
+    "font-size": 120,
     "color": "white",
 }
 
 ENDING = {
     "font": "MianFeiShangYong",
-    "font-size": 150,
+    "font-size": 120,
     "color": "red",
 }
 

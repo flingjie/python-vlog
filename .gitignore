@@ -292,3 +292,4 @@ one_crm/media/
 .vscode/*
 .local
 abc.py
+output/tmp/*.wav
