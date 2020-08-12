@@ -39,4 +39,4 @@ VTUBER_IMAGES = [
     "data/vtuber/speak_2.png",
 ]
 
-AUDIO_OUTPUT = "./data/audio"
+AUDIO_OUTPUT = "./output/tmp"

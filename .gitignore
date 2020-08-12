@@ -290,9 +290,5 @@ one_crm/media/
 
 # vscode
 .vscode/*
-
-output/*.mp4
-data/*.*
-data/*/*.*
-.env
+.local
 abc.py
