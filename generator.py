@@ -21,7 +21,7 @@ def generate_title(title, link):
                           font=config.TITLE['font'], kerning=5,
                           fontsize=config.TITLE['font-size'],
                           stroke_color=config.TITLE['stroke-color'],
-                          stroke_width=3)
+                          stroke_width=5)
     image_clip = ImageClip(link)
     clip = CompositeVideoClip([image_clip, title_clip.set_pos('center')])
     clip.duration = 1
@@ -41,7 +41,7 @@ def generate_clip_with_subtitle(image_path, text):
     txt_clip = TextClip(text.replace(" ", ""), font=config.SUBTITLE['font'],
                         color=config.SUBTITLE['color'], fontsize=config.SUBTITLE['font-size'],
                         stroke_color=config.SUBTITLE['stroke-color'],
-                        stroke_width=2)
+                        stroke_width=3)
     video = CompositeVideoClip([clip, txt_clip.set_pos(('center', 'bottom'))])
     video.audio = audio
     video.duration = audio.duration
@@ -77,12 +77,13 @@ def load_video(video_path):
     return VideoFileClip(video_path)
 
 
-def generate_ending(text="听说点赞带来好运"):
+def generate_ending(image_path="data/ending.png", text="听说点赞带来好运"):
     print(f"ending: {text}")
     size = (1280, 1280)
     title_clip = TextClip(text, color=config.ENDING['color'], font=config.ENDING['font'],
                           kerning=5, fontsize=config.ENDING['font-size'])
-    clip = CompositeVideoClip([title_clip.set_pos('center')], size=size)
+    img_clip = ImageClip(image_path)
+    clip = CompositeVideoClip([img_clip, title_clip.set_pos('center')], size=size)
     clip.duration = 1
     return clip
 
