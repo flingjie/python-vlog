@@ -4,7 +4,6 @@
 @Time    :   2020/8/10 9:17 下午
 @Author  :   Fan Lingjie 
 @Version :   1.0
-@Contact :   fanlingjie@laiye.com
 """
 
 TITLE = {
@@ -24,7 +23,7 @@ SUBTITLE = {
 TEXT_CLIP = {
     "font": "MianFeiShangYong",
     "font-size": 120,
-    "color": "white",
+    "color": "#FF9900",
 }
 
 ENDING = {

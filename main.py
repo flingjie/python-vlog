@@ -4,7 +4,6 @@
 @Time    :   2020/8/10 7:36 上午
 @Author  :   Fan Lingjie 
 @Version :   1.0
-@Contact :   fanlingjie@laiye.com
 """
 from generator import generate_vlog
 
