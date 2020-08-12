@@ -15,24 +15,36 @@ def parse(filename):
     }
     with open(filename) as f:
         lines = f.readlines()
-    title = lines[0].strip('#').strip()
-    result['title'] = title
+    s = lines[0]
+    link = s[s.find("(") + 1:s.find(")")]
+    text = s[s.find("[") + 1:s.find("]")]
+    result['title'] = {
+        "text": text,
+        "link": link
+    }
+
+    # 开始解析内容部分
     content = list(filter(lambda x: x.strip() != '', lines[1:]))
     print(content)
     i = 0
+    link = ""
+    text = ""
     while i < len(content):
         s = content[i]
-        link = s[s.find("(")+1:s.find(")")]
-        text = s[s.find("[") + 1:s.find("]")]
-        i += 1
-        if link.endswith(".mp4") or link.endswith(".gif"):
-
-            result['content'].append({
-                'link': link,
-                'text': text,
-                'type': 'video'
-            })
+        print(f"content: {s}")
+        if s.find("(") > 0:
+            print(f"find link!")
+            link = s[s.find("(") + 1:s.find(")")]
+            text = s[s.find("[") + 1:s.find("]")]
+            i += 1
+            if link.endswith(".mp4") or link.endswith(".gif"):
+                result['content'].append({
+                    'link': link,
+                    'text': text,
+                    'type': 'video'
+                })
         else:
+            print("handle nonlink")
             subtitle = content[i].strip()
             i += 1
             result['content'].append({

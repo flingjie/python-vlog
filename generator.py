@@ -15,14 +15,15 @@ import config
 import os
 
 
-def generate_title(title):
+def generate_title(title, link):
     print(f"title: {title}")
-    
-    size = (1280, 720)
     title_clip = TextClip(title, color=config.TITLE['color'],
                           font=config.TITLE['font'], kerning=5,
-                          fontsize=config.TITLE['font-size'])
-    clip = CompositeVideoClip([title_clip.set_pos('center')], size=size)
+                          fontsize=config.TITLE['font-size'],
+                          stroke_color=config.TITLE['stroke-color'],
+                          stroke_width=3)
+    image_clip = ImageClip(link)
+    clip = CompositeVideoClip([image_clip, title_clip.set_pos('center')])
     clip.duration = 1
     return clip
 
@@ -37,8 +38,9 @@ def generate_clip_with_subtitle(image_path, text):
     clip = ImageClip(image_path)
     audio = AudioFileClip(text2wav(text))
     txt_clip = TextClip(text.replace(" ", ""), font=config.SUBTITLE['font'],
-                        color=config.SUBTITLE['color'], fontsize=config.SUBTITLE['font-size'])
-
+                        color=config.SUBTITLE['color'], fontsize=config.SUBTITLE['font-size'],
+                        stroke_color=config.SUBTITLE['stroke-color'],
+                        stroke_width=2)
     video = CompositeVideoClip([clip, txt_clip.set_pos(('center', 'bottom'))])
     video.audio = audio
     video.duration = audio.duration
@@ -83,8 +85,9 @@ def generate_ending(text="听说点赞带来好运"):
 def generate_vlog(filename, output_path):
     clips = []
     result = parser.parse(filename)
-    title = result['title']
-    title_clip = generate_title(title)
+    title = result['title']['text']
+    link = result['title']['link']
+    title_clip = generate_title(title, link)
     for item in result['content']:
         if item['text']:
             clips.append(generate_text_clip(item['text']))
