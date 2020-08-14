@@ -39,3 +39,7 @@ VTUBER_IMAGES = [
 ]
 
 AUDIO_OUTPUT = "./output/tmp"
+
+
+SIZE = (1280, 1280)
+
