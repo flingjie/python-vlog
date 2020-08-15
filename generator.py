@@ -36,13 +36,13 @@ def get_vtuber(duration):
 
 def generate_clip_with_subtitle(image_path, text):
     print(f"clip text: {text}")
-    clip = ImageClip(image_path)
+    clip = ImageClip(image_path).resize(width=config.SIZE[0])
     audio = AudioFileClip(text2wav(text))
     txt_clip = TextClip(text.replace(" ", ""), font=config.SUBTITLE['font'],
                         color=config.SUBTITLE['color'], fontsize=config.SUBTITLE['font-size'],
                         stroke_color=config.SUBTITLE['stroke-color'],
                         stroke_width=3)
-    video = CompositeVideoClip([clip.set_pos("center"), txt_clip.set_pos(('center', 'bottom'))],
+    video = CompositeVideoClip([clip.set_pos("center"), txt_clip.set_pos(('center', 'top'))],
                                size=config.SIZE)
     video.audio = audio
     video.duration = audio.duration
@@ -51,15 +51,19 @@ def generate_clip_with_subtitle(image_path, text):
 
 def generate_text_clip(text):
     print(f"title: {text}")
-    rotMatrix = lambda a: np.array([[np.cos(a), np.sin(a)],
-                                    [-np.sin(a), np.cos(a)]])
+
+    def rot_matrix(a):
+        return np.array([[np.cos(a), np.sin(a)], [-np.sin(a), np.cos(a)]])
+
+    def damping(t):
+        return 1.0 / (0.3 + t ** 8)
 
     def vortex(screenpos, i, nletters):
-        d = lambda t: 1.0 / (0.3 + t ** 8)  # damping
         a = i * np.pi / nletters  # angle of the movement
-        v = rotMatrix(a).dot([-1, 0])
-        if i % 2: v[1] = -v[1]
-        return lambda t: screenpos + 400 * d(t) * rotMatrix(0.5 * d(t) * a).dot(v)
+        v = rot_matrix(a).dot([-1, 0])
+        if i % 2:
+            v[1] = -v[1]
+        return lambda t: screenpos + 400 * damping(t) * rot_matrix(0.5 * damping(t) * a).dot(v)
 
     def move_letters(letters, funcpos):
         return [letter.set_pos(funcpos(letter.screenpos, i, len(letters)))
@@ -68,8 +72,7 @@ def generate_text_clip(text):
     title_clip = TextClip(text, color=config.TEXT_CLIP['color'], font=config.TEXT_CLIP['font'],
                           kerning=5, fontsize=config.TEXT_CLIP['font-size'])
     cvc = CompositeVideoClip([title_clip.set_pos('center')], size=config.SIZE)
-    letters = findObjects(cvc)
-    clip = CompositeVideoClip(move_letters(letters, vortex),
+    clip = CompositeVideoClip(move_letters(findObjects(cvc), vortex),
                               size=config.SIZE).subclip(0, 2.6)
     return clip
 
@@ -108,10 +111,9 @@ def generate_vlog(filename, output_path):
     result = concatenate_videoclips(clips, method="compose")
     vtuber_clip = get_vtuber(result.duration)
     content_clip = CompositeVideoClip([result,
-                                       vtuber_clip.set_pos(('right', 'bottom'))])
+                                       vtuber_clip.set_pos(('left', 'bottom'))])
     ending_clip = generate_ending()
     video = concatenate_videoclips([title_clip, content_clip, ending_clip],
                                    method="compose")
-    video.write_videofile(os.path.join(output_path, f"{title}.mp4"), fps=24, audio_codec="aac")
-
-
+    video.write_videofile(os.path.join(output_path, f"{title}.mp4"),
+                          fps=24, audio_codec="aac")
