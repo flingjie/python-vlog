@@ -89,7 +89,7 @@ def generate_ending(image_path="data/ending.png", text="听说点赞带来好运
     img_clip = ImageClip(image_path)
     clip = CompositeVideoClip([img_clip, title_clip.set_pos('center')],
                               size=config.SIZE)
-    clip.duration = 2
+    clip.duration = 1.6
     return clip
 
 

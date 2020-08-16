@@ -6,7 +6,7 @@
 vlog，源于blog的变体
 
 可以看做是video加上blog
-抖音、视频号都是vlog
+抖音、视频号都算vlog
 
 这里实现基于mark down生成vlog
 
@@ -14,7 +14,7 @@ vlog，源于blog的变体
 
 ![](/Users/walker/workspace/python-vlog/data/example.png)
 
-mark down的格式有一定要求
+mark down的格式满足以下要求即可
 
 第一行是视频开头加背景图片
 

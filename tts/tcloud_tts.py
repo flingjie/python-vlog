@@ -66,7 +66,7 @@ def text2wav(content):
         #1代表1.2倍
         #2代表1.5倍
         #输入除以上整数之外的其他参数不生效，按默认值处理。
-        "Speed": 0,
+        "Speed": 2,
         "Text": content,
         "Timestamp": int(time.time()),
 
@@ -81,7 +81,7 @@ def text2wav(content):
         "VoiceType": 5,
 
         #音量大小，范围：[0，10]，分别对应11个等级的音量，默认值为0，代表正常音量。没有静音选项。
-        "Volume": 5, 
+        "Volume": 0,
     }
     signature = generate_sign(request_data)
     # print(f"signature: {signature}")
@@ -112,6 +112,6 @@ def text2wav(content):
 
 
 if __name__ == "__main__":
-    filename = text2wav("matplotlib")
+    filename = text2wav("开发框架的几个插件使用说明")
     playsound(filename)
 
